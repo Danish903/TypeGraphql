@@ -55,4 +55,17 @@ export class ConfrimUserResolver {
       await sendEmail(user.email, url);
       return true;
    }
+   @Mutation(() => Boolean)
+   async logout(@Ctx() ctx: MyContext): Promise<boolean> {
+      return new Promise((resolve, reject) => {
+         return ctx.req.session!.destroy(error => {
+            if (error) {
+               console.log(error);
+               return reject(false);
+            }
+            ctx.res.clearCookie("qid");
+            return resolve(true);
+         });
+      }); // = null;
+   }
 }
