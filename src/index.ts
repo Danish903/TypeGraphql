@@ -3,24 +3,16 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import RegisterResolver from "./modules/user/Register";
-import LoginResolver from "./modules/user/Login";
-import MeResolver from "./modules/user/Me";
+
 import session from "express-session";
 import connectRedis from "connect-redis";
 import { redis } from "./redis";
 import cors from "cors";
-import { ConfrimUserResolver } from "./modules/user/ConfirmUser";
 
 const main = async () => {
    await createConnection();
    const schema = await buildSchema({
-      resolvers: [
-         MeResolver,
-         RegisterResolver,
-         LoginResolver,
-         ConfrimUserResolver
-      ],
+      resolvers: [__dirname + "/modules/**/*.ts"],
       authChecker: ({ context: { req } }) =>
          // here you can read user from context
          // and check his permission in db against `roles` argument
