@@ -14,7 +14,12 @@ import cors from "cors";
 const main = async () => {
    await createConnection();
    const schema = await buildSchema({
-      resolvers: [MeResolver, RegisterResolver, LoginResolver]
+      resolvers: [MeResolver, RegisterResolver, LoginResolver],
+      authChecker: ({ context: { req } }) =>
+         // here you can read user from context
+         // and check his permission in db against `roles` argument
+         // that comes from `@Authorized`, eg. ["ADMIN", "MODERATOR"]
+         !req.session!.userId ? false : true // or false if access denied
    });
 
    const server = new ApolloServer({
