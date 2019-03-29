@@ -10,11 +10,17 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import { redis } from "./redis";
 import cors from "cors";
+import { ConfrimUserResolver } from "./modules/user/ConfirmUser";
 
 const main = async () => {
    await createConnection();
    const schema = await buildSchema({
-      resolvers: [MeResolver, RegisterResolver, LoginResolver],
+      resolvers: [
+         MeResolver,
+         RegisterResolver,
+         LoginResolver,
+         ConfrimUserResolver
+      ],
       authChecker: ({ context: { req } }) =>
          // here you can read user from context
          // and check his permission in db against `roles` argument
