@@ -60,4 +60,3 @@ const main = async () => {
    );
 };
 main();
-// Construct a schema, using GraphQL schema language
