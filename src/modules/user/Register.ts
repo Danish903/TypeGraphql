@@ -3,20 +3,18 @@ import bcrypt from "bcryptjs";
 import { User } from "../../entity/User";
 import { RegisterInput } from "./register/RegisterInput";
 
-import { logger } from "../middleware/logger";
 import { isAuth } from "../middleware/isAuth";
 import { sendEmail } from "../utils/sendEmail";
 import { createConfimationEmail } from "../utils/createConfirmationEmail";
 
 @Resolver(User)
 class RegisterResolver {
-   @UseMiddleware(isAuth, logger)
+   @UseMiddleware(isAuth)
    @Query(() => String)
    async helloWorld() {
       return "Hello World";
    }
 
-   @UseMiddleware(logger)
    @Mutation(() => User)
    async register(@Arg("data")
    {
