@@ -40,7 +40,7 @@ const main = async () => {
             client: redis as any
          }),
          name: "qid",
-         secret: "aslkdfjoiq12312",
+         secret: `${process.env.REDIS_SECRET}`,
          resave: false,
          saveUninitialized: false,
          cookie: {

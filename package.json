@@ -9,6 +9,7 @@
       "class-validator": "^0.9.1",
       "connect-redis": "^3.4.1",
       "cors": "^2.8.5",
+      "env-cmd": "^8.0.2",
       "express": "^4.16.4",
       "express-session": "^1.15.6",
       "graphql": "^14.2.0",
@@ -37,6 +38,6 @@
       "typescript": "^3.3.4000"
    },
    "scripts": {
-      "start": "ts-node-dev --respawn src/index.ts"
+      "start": "env-cmd ./config/prod.env ts-node-dev --respawn src/index.ts"
    }
 }
