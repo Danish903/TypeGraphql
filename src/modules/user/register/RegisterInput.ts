@@ -6,11 +6,11 @@ import { PasswordInput } from "../../shared/PasswordInput";
 @InputType()
 export class RegisterInput extends PasswordInput {
    @Field()
-   @Length(3, 30)
+   @Length(2, 30)
    firstName: string;
 
    @Field()
-   @Length(3, 30)
+   @Length(2, 30)
    lastName: string;
 
    @Field()
