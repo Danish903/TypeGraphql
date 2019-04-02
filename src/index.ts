@@ -81,7 +81,7 @@ const main = async () => {
       })
    );
 
-   server.applyMiddleware({ app });
+   server.applyMiddleware({ app, cors: false });
 
    app.listen({ port: process.env.PORT || 4000 }, () =>
       console.log(
