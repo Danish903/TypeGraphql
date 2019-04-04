@@ -17,7 +17,10 @@ export class ConfrimUserResolver {
    async confirmUser(@Arg("token") token: string): Promise<boolean> {
       const userId = await redis.get(emailConfirmationPrefix + token);
       if (!userId) return false;
-      await User.update({ id: parseInt(userId, 10) }, { confirmed: true });
+      const user = await User.findOne(userId);
+      if (!user) return false;
+      user.confirmed = true;
+      await user.save();
       await redis.del(emailConfirmationPrefix + token);
 
       return true;
