@@ -8,6 +8,10 @@ import cors from "cors";
 
 import { redis } from "./redis";
 import { createSchema } from "./utilities/createSchema";
+import {
+   createAuthorsLoader,
+   createBooksLoader
+} from "./utilities/authorsLoader";
 // import queryComplexity, {
 //    fieldConfigEstimator,
 //    simpleEstimator
@@ -28,7 +32,12 @@ const main = async () => {
 
    const server = new ApolloServer({
       schema,
-      context: ({ req, res }: any) => ({ req, res }),
+      context: ({ req, res }: any) => ({
+         req,
+         res,
+         authorsLoader: createAuthorsLoader(),
+         booksLoader: createBooksLoader()
+      }),
       validationRules: [
          // queryComplexity({
          //    // The maximum allowed query complexity, queries above this threshold will be rejected

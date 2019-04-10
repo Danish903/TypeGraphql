@@ -1,5 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
-import { ObjectType, Field, ID, Root } from "type-graphql";
+import {
+   Entity,
+   PrimaryGeneratedColumn,
+   Column,
+   BaseEntity,
+   OneToMany
+} from "typeorm";
+import { ObjectType, Field, ID, Root, Ctx } from "type-graphql";
+import { AuthorBook } from "./AuthorBook";
+import { Book } from "./Book";
+import { MyContext } from "src/types/MyContext";
 
 @ObjectType()
 @Entity()
@@ -29,4 +38,13 @@ export class User extends BaseEntity {
 
    @Column()
    password: string;
+
+   @OneToMany(() => AuthorBook, ab => ab.user)
+   bookConnection: Promise<AuthorBook[]>;
+
+   @Field(() => [Book])
+   async books(@Ctx() ctx: MyContext): Promise<Book[]> {
+      // console.log("===========", ct);
+      return ctx.booksLoader.load(this.id);
+   }
 }
